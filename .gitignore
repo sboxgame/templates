@@ -1,0 +1,14 @@
+
+.codegen/
+obj/
+code/accesslist.txt
+.intermediate
+tools_asset_info.bin
+launchSettings.json
+*.csproj
+.vs
+*.generated.*
+*.*vtex_c
+*.los
+*.sapaths
+*.sareverb

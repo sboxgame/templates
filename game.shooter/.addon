@@ -1,0 +1,29 @@
+{
+  "Title": "Shooter Game",
+  "Type": "game",
+  "Org": "local",
+  "Ident": "shooter",
+  "Tags": null,
+  "Schema": 1,
+  "HasAssets": true,
+  "AssetsPath": "",
+  "ResourcePaths": null,
+  "HasCode": true,
+  "CodePath": "/code/",
+  "Metadata": {
+    "MaxPlayers": 16,
+    "MinPlayers": 1,
+    "GameNetworkType": "Multiplayer",
+    "MapSelect": "Unrestricted",
+    "MapList": [
+      "facepunch.construct"
+    ],
+    "RankType": "None",
+    "PerMapRanking": false,
+    "LeaderboardType": "None",
+    "GameCategory": "TechDemos",
+    "ProjectTemplate": {
+      "Icon": "mouse"
+    }
+  }
+}
