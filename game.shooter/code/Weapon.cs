@@ -18,7 +18,7 @@ public partial class Weapon : AnimatedEntity
 	/// <summary>
 	/// This'll decide which entity to fire effects from. If we're in first person, the View Model, otherwise, this.
 	/// </summary>
-	public AnimatedEntity EffectEntity => ViewModelEntity.IsValid() ? ViewModelEntity : this;
+	public AnimatedEntity EffectEntity => Camera.FirstPersonViewer == Owner ? ViewModelEntity : this;
 
 	public virtual string ViewModelPath => null;
 	public virtual string ModelPath => null;

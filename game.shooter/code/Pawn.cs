@@ -124,14 +124,44 @@ public partial class Pawn : AnimatedEntity
 		ViewAngles = viewAngles.Normal;
 	}
 
+	bool IsThirdPerson { get; set; } = false;
+
 	public override void FrameSimulate( IClient cl )
 	{
 		SimulateRotation();
 
 		Camera.Rotation = ViewAngles.ToRotation();
-		Camera.Position = EyePosition;
 		Camera.FieldOfView = Screen.CreateVerticalFieldOfView( Game.Preferences.FieldOfView );
-		Camera.FirstPersonViewer = this;
+
+		if ( Input.Pressed( InputButton.View ) )
+		{
+			IsThirdPerson = !IsThirdPerson;
+		}
+
+		if ( IsThirdPerson )
+		{
+			Vector3 targetPos;
+			var pos = Position + Vector3.Up * 64;
+			var rot = Camera.Rotation * Rotation.FromAxis( Vector3.Up, -16 );
+
+			float distance = 80.0f * Scale;
+			targetPos = pos + rot.Right * ((CollisionBounds.Mins.x + 50) * Scale);
+			targetPos += rot.Forward * -distance;
+
+			var tr = Trace.Ray( pos, targetPos )
+				.WithAnyTags( "solid" )
+				.Ignore( this )
+				.Radius( 8 )
+				.Run();
+			
+			Camera.FirstPersonViewer = null;
+			Camera.Position = tr.EndPosition;
+		}
+		else
+		{
+			Camera.FirstPersonViewer = this;
+			Camera.Position = EyePosition;
+		}
 	}
 
 	public TraceResult TraceBBox( Vector3 start, Vector3 end, float liftFeet = 0.0f )

@@ -10,6 +10,7 @@
   "ResourcePaths": null,
   "HasCode": true,
   "CodePath": "/code/",
+  "PackageReferences": [],
   "Metadata": {
     "MaxPlayers": 16,
     "MinPlayers": 1,
