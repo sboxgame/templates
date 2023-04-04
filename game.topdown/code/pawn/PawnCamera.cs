@@ -8,7 +8,7 @@ public partial class PawnCamera : EntityComponent<Pawn>, ISingletonComponent
 {
 	protected float WheelSpeed => 30f;
 	protected Vector2 CameraDistance => new( 125, 1000 );
-	protected Vector2 PitchClamp => new( 40, 60 );
+	protected Vector2 PitchClamp => new( 30, 60 );
 
 	float OrbitDistance = 400f;
 	float TargetOrbitDistance = 400f;
@@ -67,7 +67,7 @@ public partial class PawnCamera : EntityComponent<Pawn>, ISingletonComponent
 
 		OrbitDistance = OrbitDistance.LerpTo( TargetOrbitDistance, Time.Delta * 10f );
 
-		if ( Input.UsingController )
+		if ( Input.UsingController || Input.Down( InputButton.SecondaryAttack ) )
 		{
 			OrbitAngles.yaw += Input.AnalogLook.yaw;
 			OrbitAngles.pitch += Input.AnalogLook.pitch;
@@ -75,21 +75,12 @@ public partial class PawnCamera : EntityComponent<Pawn>, ISingletonComponent
 
 			Entity.ViewAngles = OrbitAngles.WithPitch( 0f );
 		}
-		else if ( Input.Down( InputButton.SecondaryAttack ) )
-		{
-			OrbitAngles.yaw += Input.AnalogLook.yaw;
-			OrbitAngles.pitch += Input.AnalogLook.pitch;
-			OrbitAngles = OrbitAngles.Normal;
-
-			Entity.ViewAngles = OrbitAngles.WithPitch( 0f );
-		}
-
-		if ( !Input.Down( InputButton.SecondaryAttack ) )
+		else
 		{
 			var direction = Screen.GetDirection( Mouse.Position, Camera.FieldOfView, Camera.Rotation, Screen.Size );
 			var hitPos = IntersectPlane( Camera.Position, direction, Entity.EyePosition.z );
 
-			Entity.ViewAngles = ( hitPos - Entity.EyePosition ).EulerAngles;
+			Entity.ViewAngles = (hitPos - Entity.EyePosition).EulerAngles;
 		}
 
 		OrbitAngles.pitch = OrbitAngles.pitch.Clamp( PitchClamp.x, PitchClamp.y );
