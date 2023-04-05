@@ -20,7 +20,7 @@ public class PawnController : EntityComponent<Pawn>
 		ControllerEvents.Clear();
 
 		var movement = Entity.InputDirection.Normal;
-		var angles = Camera.Rotation.Angles().WithPitch( 0 );
+		var angles = Entity.ViewAngles.WithPitch( 0 );
 		var moveVector = Rotation.From( angles ) * movement * 320f;
 		var groundEntity = CheckForGround();
 
