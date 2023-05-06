@@ -133,7 +133,7 @@ public partial class Pawn : AnimatedEntity
 		Camera.Rotation = ViewAngles.ToRotation();
 		Camera.FieldOfView = Screen.CreateVerticalFieldOfView( Game.Preferences.FieldOfView );
 
-		if ( Input.Pressed( InputButton.View ) )
+		if ( Input.Pressed( "view" ) )
 		{
 			IsThirdPerson = !IsThirdPerson;
 		}

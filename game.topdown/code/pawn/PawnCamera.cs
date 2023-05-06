@@ -67,7 +67,7 @@ public partial class PawnCamera : EntityComponent<Pawn>, ISingletonComponent
 
 		OrbitDistance = OrbitDistance.LerpTo( TargetOrbitDistance, Time.Delta * 10f );
 
-		if ( Input.UsingController || Input.Down( InputButton.SecondaryAttack ) )
+		if ( Input.UsingController || Input.Down( "attack2" ) )
 		{
 			OrbitAngles.yaw += Input.AnalogLook.yaw;
 			OrbitAngles.pitch += Input.AnalogLook.pitch;

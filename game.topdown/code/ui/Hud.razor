@@ -17,6 +17,6 @@
     public override void Tick()
     {
         var devCam = Game.LocalClient.Components.Get<DevCamera>();
-        SetClass( "camera-movement", Input.UsingController || Input.Down(InputButton.SecondaryAttack) || devCam is not null );
+        SetClass( "camera-movement", Input.UsingController || Input.Down( "attack2" ) || devCam is not null );
     }
 }

@@ -11,6 +11,7 @@
   "HasCode": true,
   "CodePath": "/code/",
   "PackageReferences": [],
+  "EditorReferences": null,
   "Metadata": {
     "MaxPlayers": 16,
     "MinPlayers": 1,
