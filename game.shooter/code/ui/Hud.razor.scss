@@ -1,0 +1,21 @@
+Hud
+{
+    .header
+    {
+        left: 128px;
+        top: 128px;
+        flex-direction: column;
+
+        label
+        {
+            font-family: Roboto;
+            color: white;
+            font-size: 32px;
+
+            &.subtitle
+            {
+                font-size: 16px;
+            }
+        }
+    }
+}

@@ -18,6 +18,17 @@ namespace MyGame;
 public partial class MyGame : Sandbox.GameManager
 {
 	/// <summary>
+	/// Called when the game is created (on both the server and client)
+	/// </summary>
+	public MyGame()
+	{
+		if ( Game.IsClient )
+		{
+			Game.RootPanel = new Hud();
+		}
+	}
+
+	/// <summary>
 	/// A client has joined the server. Make them a pawn to play with
 	/// </summary>
 	public override void ClientJoined( IClient client )
