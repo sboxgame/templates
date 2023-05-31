@@ -17,6 +17,9 @@ namespace MyGame;
 /// </summary>
 public partial class MyGame : Sandbox.GameManager
 {
+	/// <summary>
+	/// Called when the game is created (on both the server and client)
+	/// </summary>
 	public MyGame()
 	{
 		if ( Game.IsClient )
