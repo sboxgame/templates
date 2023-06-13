@@ -6,11 +6,12 @@
 @using Sandbox.UI;
 
 <root>
+    <div style="flex-grow: 1;" />
+
     <div class="game-title">
         @Game.Menu.Package.Title
     </div>
 
-    <div style="flex-grow: 1;" />
 
     <div class="controls">
         <div class="span">
@@ -32,11 +33,13 @@
             }
         </div>
 
-        <div style="height: 64px;" />
+        <div class="spacer" />
 
         <a class="button" onclick=@Play>Start</a>
         <a class="button" href="/">Return</a>
     </div>
+
+    <div style="flex-grow: 1;" />
 </root>
 
 @code

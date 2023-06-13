@@ -42,12 +42,21 @@ MainMenu
         }
     }
 
+    .spacer
+    {
+        height: 1px;
+        background-image: linear-gradient( to right, rgba( white, 0.4 ), rgba( white, 0 ) );
+        width: 512px;
+        margin: 16px 0px;
+    }
+
     .game-title
     {
-        font-family: Roboto;
+        font-family: Roboto Condensed;
         font-weight: 700;
         font-size: 70px;
         color: rgba( white, 1 );
+        padding-bottom: 64px;
     }
 
     .controls
@@ -59,11 +68,17 @@ MainMenu
 
         a, .button
         {
+            font-family: Roboto;
             &:hover
             {
                 color: rgba( white, 1 );
                 font-weight: 900;
                 sound-in: ui.button.over;
+            }
+
+            &:active
+            {
+                sound-in: ui.button.press;
             }
         }
 
@@ -90,14 +105,17 @@ MainMenu
         top: 0;
         flex-direction: column;
 
+        transition: opacity 0.15s ease-out;
+
         &.hidden
         {
-            display: none;
+            opacity: 0;
         }
     }
 }
 
-FormGroup {
+FormGroup
+{
     flex-direction: column;
     min-width: 300px;
     gap:16px;
@@ -111,9 +129,16 @@ SlimPackageCard
 
     > i
     {
-        &:hover {
+        &:hover
+        {
             color: white;
             transform: scale( 1.1 );
+            sound-in: ui.button.over;
+        }
+
+        &:active
+        {
+            sound-in: ui.button.press;
         }
     }
 }

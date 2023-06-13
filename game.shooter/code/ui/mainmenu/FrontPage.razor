@@ -5,11 +5,11 @@
 @using Sandbox.UI;
 
 <root>
+    <div style="flex-grow: 1;" />
+
     <div class="game-title">
         @Game.Menu.Package.Title
     </div>
-
-    <div style="flex-grow: 1;" />
 
     <div class="controls">
         @if (Game.InGame)
@@ -28,6 +28,8 @@
 
         <a class="button" @onclick=@Game.Menu.Close>Quit</a>
     </div>
+
+    <div style="flex-grow: 1;" />
 </root>
 
 @code
