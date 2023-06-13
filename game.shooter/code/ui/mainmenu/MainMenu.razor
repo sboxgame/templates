@@ -32,6 +32,6 @@
 
     protected override int BuildHash()
     {
-        return HashCode.Combine( Game.InGame );
+        return HashCode.Combine( Game.InGame, Game.Menu.Lobby, Game.Menu.Lobby?.Map );
     }
 }
