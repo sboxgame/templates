@@ -11,14 +11,10 @@
 <root style="flex-direction: column;">
     <div class="background" />
 
-    <div class="game-title">
-        @Game.Menu.Package.Title
-    </div>
-
     <div style="flex-grow: 1;" />
 
-    <div class="controls">
-         <a class="button">@( Progress.Title ?? "Loading..." )</a>
+    <div class="controls" style="flex-direction: row; justify-content: center;">
+        <a class="button">@( Progress.Title ?? "Loading..." )</a>
     </div>
 </root>
 

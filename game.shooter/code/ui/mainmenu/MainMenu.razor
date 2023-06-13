@@ -1,59 +1,37 @@
+@using System;
 @using Sandbox;
 @using Sandbox.UI;
-@using System.Linq;
-@using System.Threading.Tasks;
 
-@inherits RootPanel
+@inherits Sandbox.UI.NavHostPanel
 @implements Sandbox.Menu.IGameMenuPanel
 @attribute [StyleSheet]
 
 <root style="flex-direction: column;">
     <div class="background" />
-
-    <div class="game-title">
-        @Game.Menu.Package.Title
-    </div>
-
-    <div style="flex-grow: 1;" />
-
-    <div class="controls">
-        @if ( Game.InGame )
-        {
-            <a class="button" onclick=@LeaveGame>Leave</a>
-        }
-        else
-        {
-            <a class="button" onclick=@Play>Play</a>
-
-            if ( Game.Menu.Package.SupportsSavedGames && Game.Menu.SavedGames.Any() )
-            {
-                <a class="button" onclick=@LoadSavedGame>Load</a>
-            }
-        }
-
-        <a class="button" @onclick=@Game.Menu.Close>Quit</a>
-    </div>
+    <div class="navigator-canvas" slot="navigator-canvas" />
 </root>
 
 @code
 {
     public MainMenu()
     {
+        DefaultUrl = "/";
+
+        AddDestination( "/", typeof( FrontPage ) );
+        AddDestination( "/setup", typeof( SetupGame ) );
+        AddDestination( "/setup/map", typeof( MapSelect ) );
+
         BindClass( "ingame", () => Game.InGame );
     }
 
-    void LoadSavedGame()
-    {
-        // blah blah blah
-    }
+    [GameEvent.Menu.ServerJoined]
+    public void OnServerJoined() => Navigate( "/" );
 
-    async Task Play()
-    {
-        await Game.Menu.StartServerAsync( 16, "My cool server", "facepunch.square" );
-    }
+    [GameEvent.Menu.ServerLeave]
+    public void OnServerLeave() => Navigate ("/" );
 
-    void LeaveGame()
+    protected override int BuildHash()
     {
-        Game.Menu.LeaveServer( "Leaving" );
+        return HashCode.Combine( Game.InGame );
     }
 }

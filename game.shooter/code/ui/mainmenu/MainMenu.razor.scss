@@ -55,10 +55,9 @@ MainMenu
         flex-direction: column;
         gap: 50px;
         align-items: flex-start;
-        font-family: Roboto;
         text-transform: uppercase;
 
-        a
+        a, .button
         {
             &:hover
             {
@@ -67,5 +66,60 @@ MainMenu
                 sound-in: ui.button.over;
             }
         }
+
+        .span
+        {
+            gap: 128px;
+        }
     }
+
+    .navigator-canvas
+    {
+        flex-direction: column;
+        height: 100%;
+        flex-grow: 1;
+        flex-shrink: 0;
+    }
+
+    .navigator-body
+    {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        flex-direction: column;
+
+        &.hidden
+        {
+            display: none;
+        }
+    }
+}
+
+FormGroup {
+    flex-direction: column;
+    min-width: 300px;
+    gap:16px;
+}
+
+SlimPackageCard
+{
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+
+    > i
+    {
+        &:hover {
+            color: white;
+            transform: scale( 1.1 );
+        }
+    }
+}
+
+i
+{
+    font-family: Material Icons;
+    text-transform: lowercase;
 }

@@ -1,0 +1,49 @@
+@using Sandbox;
+@using System.Linq;
+@using System.Threading.Tasks;
+@using Sandbox.Menu;
+@using Sandbox.UI;
+
+<root>
+    <div class="game-title">
+        @Game.Menu.Package.Title
+    </div>
+
+    <div style="flex-grow: 1;" />
+
+    <div class="controls">
+        @if (Game.InGame)
+        {
+            <a class="button" onclick=@LeaveGame>Leave</a>
+        }
+        else
+        {
+            <a class="button" href="/setup">Play</a>
+
+            @if ( Game.Menu.Package.SupportsSavedGames && Game.Menu.SavedGames.Any())
+            {
+                <a class="button" onclick=@LoadSavedGame>Load Save</a>
+            }
+        }
+
+        <a class="button" @onclick=@Game.Menu.Close>Quit</a>
+    </div>
+</root>
+
+@code
+{
+    void LoadSavedGame()
+    {
+        // blah blah blah
+    }
+
+    async Task Play()
+    {
+        await Game.Menu.StartServerAsync( 16, "My cool server", "facepunch.square" );
+    }
+
+    void LeaveGame()
+    {
+        Game.Menu.LeaveServer("Leaving");
+    }
+}
