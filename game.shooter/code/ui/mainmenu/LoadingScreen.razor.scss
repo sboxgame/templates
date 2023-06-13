@@ -1,5 +1,5 @@
 
-MainMenu
+LoadingScreen
 {
     background-color: #262934;
     padding: 128px 128px;
@@ -31,17 +31,6 @@ MainMenu
         transform: scaleX( 1.1 );
     }
 
-    &.ingame
-    {
-        background-color: #262934ee;
-        backdrop-filter: blur(10px);
-
-        .background
-        {
-            opacity: 0;
-        }
-    }
-
     .game-title
     {
         font-family: Roboto;
@@ -57,15 +46,5 @@ MainMenu
         align-items: flex-start;
         font-family: Roboto;
         text-transform: uppercase;
-
-        a
-        {
-            &:hover
-            {
-                color: rgba( white, 1 );
-                font-weight: 900;
-                sound-in: ui.button.over;
-            }
-        }
     }
 }

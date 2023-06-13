@@ -1,0 +1,34 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using System.Linq;
+@using System.Threading.Tasks;
+@using Sandbox.Menu;
+
+@inherits RootPanel
+@implements Sandbox.Menu.ILoadingScreenPanel
+@attribute [StyleSheet]
+
+<root style="flex-direction: column;">
+    <div class="background" />
+
+    <div class="game-title">
+        @Game.Menu.Package.Title
+    </div>
+
+    <div style="flex-grow: 1;" />
+
+    <div class="controls">
+         <a class="button">@( Progress.Title ?? "Loading..." )</a>
+    </div>
+</root>
+
+@code
+{
+    public LoadingProgress Progress;
+
+    public void OnLoadingProgress( LoadingProgress progress )
+    {
+        Progress = progress;
+        StateHasChanged();
+    }
+}
