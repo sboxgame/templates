@@ -6,31 +6,28 @@
 @using Sandbox.UI;
 
 <root>
-    <div style="flex-grow: 1;" />
-
-    <div class="game-title">
+    <label class="game-title">
         @Game.Menu.Package.Title
-    </div>
-
+    </label>
 
     <div class="controls">
         <div class="span">
-            @if (MaxPlayersSupported > 1)
+            @if ( MaxPlayersSupported > 1 )
             {
                 <FormGroup class="form-group">
-                    <Label class="header">Maximum Players</Label>
+                    <Label>Maximum Players</Label>
                     <Control>
                         <SliderControl ShowRange=@true Min=@(1f) Max=@MaxPlayersSupported Value:bind=@Game.Menu.Lobby.MaxMembers />
                     </Control>
                 </FormGroup>
-
-                <FormGroup class="form-group">
-                    <Label class="header">Map</Label>
-                    <Control>
-                        <SlimPackageCard OnLaunch=@OpenMapSelect Package=@MapPackage />
-                    </Control>
-                </FormGroup>
             }
+
+            <FormGroup class="form-group">
+                <Label>Map</Label>
+                <Control>
+                    <SlimPackageCard OnLaunch=@OpenMapSelect Package=@MapPackage />
+                </Control>
+            </FormGroup>
         </div>
 
         <div class="spacer" />
@@ -38,8 +35,6 @@
         <a class="button" onclick=@Play>Start</a>
         <a class="button" href="/">Return</a>
     </div>
-
-    <div style="flex-grow: 1;" />
 </root>
 
 @code

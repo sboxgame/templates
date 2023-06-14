@@ -5,8 +5,6 @@
 @using Sandbox.UI;
 
 <root>
-    <div style="flex-grow: 1;" />
-
     <div class="game-title">
         @Game.Menu.Package.Title
     </div>
@@ -22,37 +20,16 @@
 
             @if ( Game.Menu.Package.SupportsSavedGames && Game.Menu.SavedGames.Any())
             {
-                <a class="button" onclick=@LoadSavedGame>Load Save</a>
+                <a class="button" href="/setup/save">Load Save</a>
             }
         }
 
         <a class="button" @onclick=@Game.Menu.Close>Quit</a>
     </div>
-
-    <div style="flex-grow: 1;" />
 </root>
 
 @code
 {
-    async void LoadSavedGame()
-    {
-        await Game.Menu.CreateLobbyAsync();
-
-        var save = Game.Menu.SavedGames
-                    .OrderByDescending( x => x.Time ).FirstOrDefault();
-
-        if ( save != null )
-        {
-            Game.Menu.Lobby.SavedGame = save.Name;
-
-            if ( !string.IsNullOrEmpty( save.Map ) )
-                Game.Menu.Lobby.Map = save.Map;
-
-            await Game.Menu.StartServerAsync( Game.Menu.Lobby.MaxMembers, Game.Menu.Lobby.Title, Game.Menu.Lobby.Map ?? "facepunch.square" );
-         }
-
-    }
-
     void LeaveGame()
     {
         Game.Menu.LeaveServer( "Leaving" );
