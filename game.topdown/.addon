@@ -19,7 +19,7 @@
     "GameNetworkType": "Multiplayer",
     "MapSelect": "Unrestricted",
     "MapList": [
-      "facepunch.construct"
+      "facepunch.square"
     ],
     "RankType": "None",
     "PerMapRanking": false,

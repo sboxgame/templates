@@ -19,7 +19,7 @@
     "GameNetworkType": "Multiplayer",
     "MapSelect": "Unrestricted",
     "MapList": [
-      "facepunch.construct"
+      "facepunch.square"
     ],
     "RankType": "None",
     "PerMapRanking": false,
@@ -27,6 +27,11 @@
     "GameCategory": "TechDemos",
     "ProjectTemplate": {
       "Icon": "location_searching"
-    }
+    },
+    "CsProjName": "",
+    "HttpAllowList": null,
+    "SavedGames": true,
+    "MapDependentSaves": false,
+    "SaveFormatVersion": 1001
   }
 }
