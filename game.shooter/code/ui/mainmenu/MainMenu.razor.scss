@@ -162,6 +162,21 @@ i
 {
     font-family: Material Icons;
     text-transform: lowercase;
+
+    &.with-click
+    {
+        &:hover
+        {
+            color: white;
+            transform: scale( 1.1 );
+            sound-in: ui.button.over;
+        }
+
+        &:active
+        {
+            sound-in: ui.button.press;
+        }
+    }
 }
 
 .avatar

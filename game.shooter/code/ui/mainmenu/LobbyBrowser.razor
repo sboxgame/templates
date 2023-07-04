@@ -11,7 +11,10 @@
     </label>
 
     <div class="controls">
-        <label>Showing @Game.Menu.Lobbies.Count() lobbies</label>
+        <div class="span">
+            <label>Showing @Game.Menu.Lobbies.Count() lobbies</label>
+            <i class="with-click" tooltip="Refresh lobbies" @onclick=@Refresh>refresh</i>
+        </div>
 
         <div class="scroll">
             @foreach ( var lobby in Game.Menu.Lobbies )
@@ -43,5 +46,17 @@
 
         await lobby.JoinAsync();
         this.Navigate( "/lobby/active" );
+    }
+
+    public async void Refresh()
+    {
+        await Game.Menu.QueryLobbiesAsync( null, 1 );
+
+        StateHasChanged();
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Game.Menu.Lobbies.Count() );
     }
 }
