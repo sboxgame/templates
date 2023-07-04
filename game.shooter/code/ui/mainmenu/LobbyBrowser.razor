@@ -1,0 +1,47 @@
+@using Sandbox;
+@using System;
+@using System.Linq;
+@using System.Threading.Tasks;
+@using Sandbox.Menu;
+@using Sandbox.UI;
+
+<root>
+    <label class="game-title">
+        @Game.Menu.Package.Title
+    </label>
+
+    <div class="controls">
+        <label>Showing @Game.Menu.Lobbies.Count() lobbies</label>
+
+        <div class="scroll">
+            @foreach ( var lobby in Game.Menu.Lobbies )
+            {
+                <a class="button" @onclick=@( () => JoinLobby( lobby ) ) >@(lobby.Owner.Name)'s lobby (@lobby.MemberCount/@lobby.MaxMembers)</a>
+            }
+        </div>
+
+
+        <div class="spacer" />
+
+        <a class="button" @onclick=@CreateLobbyAsync>Create Lobby</a>
+        <a class="button" href="/">Return</a>
+    </div>
+</root>
+
+@code
+{
+    public async void CreateLobbyAsync()
+    {
+        await Game.Menu.CreateLobbyAsync();
+        Game.Menu.Lobby.Map = "facepunch.square";
+        this.Navigate( "/lobby/active" );
+    }
+
+    public async void JoinLobby( ILobby lobby )
+    {
+        if ( lobby == null) return;
+
+        await lobby.JoinAsync();
+        this.Navigate( "/lobby/active" );
+    }
+}
