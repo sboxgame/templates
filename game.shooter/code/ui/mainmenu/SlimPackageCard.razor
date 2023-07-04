@@ -1,0 +1,30 @@
+@using System;
+@using Sandbox;
+
+<root>
+    @if ( Package == null )
+    {
+        <div class="button" @onclick=@OnCardClicked>Select Package</div>
+    }
+    else
+    {
+        <div class="button" @onclick=@OnCardClicked>@Package.Title</div>
+        <i tooltip="See information about this package" @onclick=@( () => Game.Overlay.ShowPackageModal( Package.FullIdent ) )>info</i>
+    }
+</root>
+
+@code
+{
+    public Package Package { get; set; }
+    public System.Action OnLaunch { get; set; }
+
+    void OnCardClicked()
+    {
+        OnLaunch?.Invoke();
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Package );
+    }
+}

@@ -1,0 +1,42 @@
+@using Sandbox;
+@using System;
+@using System.Linq;
+@using Sandbox.UI;
+
+<root>
+    <label class="game-title">
+        @Game.Menu.Package.Title
+    </label>
+
+    <div class="controls">
+        @foreach ( var save in Game.Menu.SavedGames.OrderByDescending( x => x.Time ) )
+        {
+            <a class="button" @onclick=@(() => LoadSavedGame( save ))>@save.Name - @save.Time</a>
+        }
+
+        <div class="spacer" />
+
+        <a class="button" href="/">Return</a>
+    </div>
+</root>
+
+@code
+{
+    async void LoadSavedGame( SavedGame save )
+    {
+        if ( save != null )
+        {
+            Game.Menu.Lobby.SavedGame = save.Name;
+
+            if ( !string.IsNullOrEmpty( save.Map ) )
+                Game.Menu.Lobby.Map = save.Map;
+
+            await Game.Menu.StartServerAsync( Game.Menu.Lobby.MaxMembers, Game.Menu.Lobby.Title, Game.Menu.Lobby.Map ?? "facepunch.square" );
+         }
+    }
+   
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Game.Menu.Lobby, Game.Menu.Lobby?.Map );
+    }
+}

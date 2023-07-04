@@ -1,0 +1,77 @@
+@using Sandbox;
+@using System;
+@using System.Linq;
+@using System.Threading.Tasks;
+@using Sandbox.Menu;
+@using Sandbox.UI;
+
+<root>
+    <label class="game-title">
+        @Game.Menu.Package.Title
+    </label>
+
+    <div class="controls">
+        <div class="span">
+            @if ( MaxPlayersSupported > 1 )
+            {
+                <FormGroup class="form-group">
+                    <Label>Maximum Players</Label>
+                    <Control>
+                        <SliderControl ShowRange=@true Min=@(1f) Max=@MaxPlayersSupported Value:bind=@Game.Menu.Lobby.MaxMembers />
+                    </Control>
+                </FormGroup>
+            }
+
+            <FormGroup class="form-group">
+                <Label>Map</Label>
+                <Control>
+                    <SlimPackageCard OnLaunch=@OpenMapSelect Package=@MapPackage />
+                </Control>
+            </FormGroup>
+        </div>
+
+        <div class="spacer" />
+
+        <a class="button" onclick=@Play>Start</a>
+        <a class="button" href="/">Return</a>
+    </div>
+</root>
+
+@code
+{
+    int MaxPlayersSupported { get; set; } = 1;
+    Package MapPackage { get; set; }
+
+    void OpenMapSelect()
+    {
+        this.Navigate( "/setup/map" );
+    }
+
+    async void FetchPackage()
+    {
+        MapPackage = await Package.FetchAsync( Game.Menu.Lobby?.Map ?? "facepunch.square", true );
+    }
+
+    protected override void OnAfterTreeRender( bool firstTime )
+    {
+        FetchPackage();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        MaxPlayersSupported = Game.Menu.Package.GetMeta<int>( "MaxPlayers", 1 );
+
+        await Game.Menu.CreateLobbyAsync( MaxPlayersSupported, "game", true );
+        Game.Menu.Lobby.Map = "facepunch.square";
+    }
+
+    async Task Play()
+    {
+        await Game.Menu.StartServerAsync( Game.Menu.Lobby.MaxMembers, $"{Game.Menu.Lobby.Owner.Name}'s game", Game.Menu.Lobby.Map );
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Game.Menu.Lobby, Game.Menu.Lobby?.Map, MapPackage );
+    }
+}

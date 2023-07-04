@@ -1,0 +1,39 @@
+@using Sandbox;
+@using System.Linq;
+@using System.Threading.Tasks;
+@using Sandbox.Menu;
+@using Sandbox.UI;
+
+<root>
+    <div class="game-title">
+        @Game.Menu.Package.Title
+    </div>
+
+    <div class="controls">
+        @if (Game.InGame)
+        {
+            <a class="button" onclick=@LeaveGame>Leave</a>
+        }
+        else
+        {
+            <a class="button" href="/setup">Play</a>
+
+            <a class="button" href="/lobby/list">Lobbies</a>
+
+            @if ( Game.Menu.Package.SupportsSavedGames && Game.Menu.SavedGames.Any())
+            {
+                <a class="button" href="/setup/save">Load Save</a>
+            }
+        }
+
+        <a class="button" @onclick=@Game.Menu.Close>Quit</a>
+    </div>
+</root>
+
+@code
+{
+    void LeaveGame()
+    {
+        Game.Menu.LeaveServer( "Leaving" );
+    }
+}

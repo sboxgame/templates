@@ -1,0 +1,109 @@
+@using Sandbox;
+@using System;
+@using System.Linq;
+@using System.Threading.Tasks;
+@using Sandbox.Menu;
+@using Sandbox.UI;
+
+<root>
+    <label class="game-title">
+        @Game.Menu.Package.Title
+    </label>
+
+    @if ( Lobby == null ) 
+    {
+        <div class="controls">
+            <a class="button">Loading...</a>
+
+            <a class="button" href="/lobby/list">Return</a>
+        </div>
+    }
+    else
+    {
+
+        <div class="controls">
+            <div class="col">
+                <label>Members (@Lobby.MemberCount/@Lobby.MaxMembers)</label>
+
+                <div class="span">
+                    @foreach (var member in Lobby.Members)
+                    {
+                        <img class="avatar" src="avatar:@member.Id" tooltip="@member.Name" />
+                    }
+                </div>
+            </div>
+
+           @if ( Lobby.Owner.IsMe )
+            {
+                <div class="span">
+                    @if ( MaxPlayersSupported > 1 )
+                    {
+                        <FormGroup class="form-group">
+                            <Label>Maximum Players</Label>
+                            <Control>
+                                <SliderControl ShowRange=@true Min=@(1f) Max=@MaxPlayersSupported Value:bind=@Game.Menu.Lobby.MaxMembers />
+                            </Control>
+                        </FormGroup>
+                    }
+
+                    <FormGroup class="form-group">
+                        <Label>Map</Label>
+                        <Control>
+                            <SlimPackageCard OnLaunch=@OpenMapSelect Package=@MapPackage />
+                        </Control>
+                    </FormGroup>
+                </div>
+            }
+
+           <div class="spacer" />
+
+
+            <a class="button" @onclick=@LeaveLobby>Leave Lobby</a>
+
+            <a class="button" @onclick=@Start>Start</a>
+
+            <a class="button" href="/lobby/list">Return</a>
+        </div>
+    }
+</root>
+
+@code
+{
+    Friend Owner => Lobby.Owner;
+    ILobby Lobby => Game.Menu.Lobby;
+
+    int MaxPlayersSupported { get; set; } = 1;
+    Package MapPackage { get; set; }
+
+    void OpenMapSelect()
+    {
+        this.Navigate( "/setup/map" );
+    }
+
+    public void LeaveLobby()
+    {
+        Lobby?.Leave();
+
+        this.Navigate( "/lobby/list" );
+    }
+
+    async Task Start()
+    {
+        await Game.Menu.StartServerAsync( Game.Menu.Lobby.MaxMembers, $"{Game.Menu.Lobby.Owner.Name}'s game", Game.Menu.Lobby.Map );
+    }
+
+    async void FetchPackage()
+    {
+        MapPackage = await Package.FetchAsync( Game.Menu.Lobby?.Map ?? "facepunch.square", true );
+    }
+
+    protected override void OnAfterTreeRender( bool firstTime )
+    {
+       FetchPackage();
+    }
+
+    protected override void OnParametersSet()
+    {
+        MaxPlayersSupported = Game.Menu.Package.GetMeta<int>( "MaxPlayers", 1 );
+    }
+}

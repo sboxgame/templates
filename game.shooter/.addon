@@ -7,7 +7,8 @@
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
-  "ResourcePaths": null,
+  "Resources": null,
+  "MenuResources": null,
   "HasCode": true,
   "CodePath": "/code/",
   "PackageReferences": [],
@@ -18,7 +19,7 @@
     "GameNetworkType": "Multiplayer",
     "MapSelect": "Unrestricted",
     "MapList": [
-      "facepunch.construct"
+      "facepunch.square"
     ],
     "RankType": "None",
     "PerMapRanking": false,
@@ -26,6 +27,11 @@
     "GameCategory": "TechDemos",
     "ProjectTemplate": {
       "Icon": "location_searching"
-    }
+    },
+    "CsProjName": "",
+    "HttpAllowList": null,
+    "SavedGames": true,
+    "MapDependentSaves": false,
+    "SaveFormatVersion": 1001
   }
 }

@@ -1,0 +1,64 @@
+@using Sandbox;
+@using System;
+@using System.Linq;
+@using System.Threading.Tasks;
+@using Sandbox.Menu;
+@using Sandbox.UI;
+
+<root>
+    <label class="game-title">
+        @Game.Menu.Package.Title
+    </label>
+
+    <div class="controls">
+        <div class="span">
+            <label>Showing @Game.Menu.Lobbies.Count() @(Game.Menu.Lobbies.Count() == 1 ? "lobby" : "lobbies")</label>
+            <i class="with-click" tooltip="Refresh lobbies" @onclick=@Refresh>refresh</i>
+        </div>
+
+        <div class="scroll">
+            @foreach ( var lobby in Game.Menu.Lobbies )
+            {
+                <a class="button" @onclick=@( () => JoinLobby( lobby ) ) >@(lobby.Owner.Name)'s lobby (@lobby.MemberCount/@lobby.MaxMembers)</a>
+            }
+        </div>
+
+        <div class="spacer" />
+
+        <a class="button" @onclick=@CreateLobbyAsync>Create Lobby</a>
+        <a class="button" href="/">Return</a>
+    </div>
+</root>
+
+@code
+{
+    public async void CreateLobbyAsync()
+    {
+        await Game.Menu.CreateLobbyAsync( 64, "game", true );
+        Game.Menu.Lobby.Map = "facepunch.square";
+        this.Navigate( "/lobby/active" );
+    }
+
+    public async void JoinLobby( ILobby lobby )
+    {
+        if ( lobby == null ) return;
+
+        // don't exist in two lobbies at once
+        Game.Menu.Lobby?.Leave();
+
+        await lobby.JoinAsync();
+        this.Navigate( "/lobby/active" );
+    }
+
+    public async void Refresh()
+    {
+        await Game.Menu.QueryLobbiesAsync( null, 1 );
+
+        StateHasChanged();
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Game.Menu.Lobbies.Count() );
+    }
+}

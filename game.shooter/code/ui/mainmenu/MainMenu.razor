@@ -1,0 +1,40 @@
+@using System;
+@using Sandbox;
+@using Sandbox.UI;
+
+@inherits Sandbox.UI.NavHostPanel
+@implements Sandbox.Menu.IGameMenuPanel
+@attribute [StyleSheet]
+
+<root style="flex-direction: column;">
+    <div class="background" />
+    <div class="navigator-canvas" slot="navigator-canvas" />
+</root>
+
+@code
+{
+    public MainMenu()
+    {
+        DefaultUrl = "/";
+
+        AddDestination( "/", typeof( FrontPage ) );
+        AddDestination( "/setup", typeof( SetupGame ) );
+        AddDestination( "/setup/map", typeof( MapSelect ) );
+
+        AddDestination( "/lobby/list", typeof( LobbyBrowser ) );
+        AddDestination( "/lobby/active", typeof( ActiveLobby ) );
+
+        BindClass( "ingame", () => Game.InGame );
+    }
+
+    [GameEvent.Menu.ServerJoined]
+    public void OnServerJoined() => Navigate( "/" );
+
+    [GameEvent.Menu.ServerLeave]
+    public void OnServerLeave() => Navigate ("/" );
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Game.InGame, Game.Menu.Lobby, Game.Menu.Lobby?.Map );
+    }
+}
