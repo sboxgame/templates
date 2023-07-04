@@ -60,6 +60,8 @@
 
             <a class="button" @onclick=@LeaveLobby>Leave Lobby</a>
 
+            <a class="button" @onclick=@Start>Start</a>
+
             <a class="button" href="/lobby/list">Return</a>
         </div>
     }
@@ -83,6 +85,11 @@
         Lobby?.Leave();
 
         this.Navigate( "/lobby/list" );
+    }
+
+    async Task Start()
+    {
+        await Game.Menu.StartServerAsync( Game.Menu.Lobby.MaxMembers, $"{Game.Menu.Lobby.Owner.Name}'s game", Game.Menu.Lobby.Map );
     }
 
     async void FetchPackage()
