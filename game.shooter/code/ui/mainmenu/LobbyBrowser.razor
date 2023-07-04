@@ -23,7 +23,6 @@
             }
         </div>
 
-
         <div class="spacer" />
 
         <a class="button" @onclick=@CreateLobbyAsync>Create Lobby</a>
@@ -42,7 +41,10 @@
 
     public async void JoinLobby( ILobby lobby )
     {
-        if ( lobby == null) return;
+        if ( lobby == null ) return;
+
+        // don't exist in two lobbies at once
+        Game.Menu.Lobby?.Leave();
 
         await lobby.JoinAsync();
         this.Navigate( "/lobby/active" );
