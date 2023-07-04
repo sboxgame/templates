@@ -99,10 +99,10 @@
 
     protected override void OnAfterTreeRender( bool firstTime )
     {
-        FetchPackage();
+       FetchPackage();
     }
 
-    protected override async Task OnParametersSetAsync()
+    protected override void OnParametersSet()
     {
         MaxPlayersSupported = Game.Menu.Package.GetMeta<int>( "MaxPlayers", 1 );
     }

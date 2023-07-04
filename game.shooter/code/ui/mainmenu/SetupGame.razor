@@ -61,7 +61,7 @@
     {
         MaxPlayersSupported = Game.Menu.Package.GetMeta<int>( "MaxPlayers", 1 );
 
-        await Game.Menu.CreateLobbyAsync();
+        await Game.Menu.CreateLobbyAsync( MaxPlayersSupported, "game", true );
         Game.Menu.Lobby.Map = "facepunch.square";
     }
 

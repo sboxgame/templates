@@ -32,7 +32,7 @@
 {
     public async void CreateLobbyAsync()
     {
-        await Game.Menu.CreateLobbyAsync();
+        await Game.Menu.CreateLobbyAsync( 64, "game", true );
         Game.Menu.Lobby.Map = "facepunch.square";
         this.Navigate( "/lobby/active" );
     }
