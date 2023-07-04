@@ -1,5 +1,6 @@
 @using Sandbox;
 @using Sandbox.UI;
+@using System.Linq;
 
 @inherits Panel
 
@@ -9,7 +10,7 @@
     <div style="height: 64px;" />
 
     <div class="controls">
-        <a href="/setup">Return</a>
+        <a @onclick=@GoBack>Return</a>
     </div>
 </root>
 
@@ -18,6 +19,11 @@
     void OnPackageSelected( Package package )
     {
         Game.Menu.Lobby.Map = package.FullIdent;
-        this.Navigate( "/setup" );
+        GoBack();
+    }
+
+    void GoBack()
+    {
+        AncestorsAndSelf.OfType<NavHostPanel>().FirstOrDefault()?.GoBack();
     }
 }
