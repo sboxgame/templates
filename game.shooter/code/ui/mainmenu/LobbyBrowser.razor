@@ -12,7 +12,7 @@
 
     <div class="controls">
         <div class="span">
-            <label>Showing @Game.Menu.Lobbies.Count() lobbies</label>
+            <label>Showing @Game.Menu.Lobbies.Count() @(Game.Menu.Lobbies.Count() == 1 ? "lobby" : "lobbies")</label>
             <i class="with-click" tooltip="Refresh lobbies" @onclick=@Refresh>refresh</i>
         </div>
 
