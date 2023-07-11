@@ -19,10 +19,11 @@ MainMenu
         height: 100%;
         background-image: url( https://files.facepunch.com/tony/1b1311b1/boxes.webm );
         opacity: 0.2;
-        background-size: contain;
+        background-size: cover;
         filter: blur( 20px );
         mask: linear-gradient( 45deg, white, white, black );
         mask-scope: filter;
+        background-repeat: no-repeat;
     }
 
     &:intro
