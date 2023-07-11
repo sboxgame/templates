@@ -6,6 +6,13 @@
 @using Sandbox.UI;
 
 <root>
+    @if ( ChoosingMap )
+    {
+        <MapSelect OnPackageSelected=@OnMapSelected />
+
+        return;
+    }
+
     <label class="game-title">
         @Game.Menu.Package.Title
     </label>
@@ -49,7 +56,7 @@
                     <FormGroup class="form-group">
                         <Label>Map</Label>
                         <Control>
-                            <SlimPackageCard OnLaunch=@OpenMapSelect Package=@MapPackage />
+                            <SlimPackageCard OnLaunch=@OnMapClicked Package=@MapPackage />
                         </Control>
                     </FormGroup>
                 </div>
@@ -75,9 +82,20 @@
     int MaxPlayersSupported { get; set; } = 1;
     Package MapPackage { get; set; }
 
-    void OpenMapSelect()
+    bool ChoosingMap;
+    void OnMapClicked()
     {
-        this.Navigate( "/setup/map" );
+        ChoosingMap = true;
+        StateHasChanged();
+    }
+
+    void OnMapSelected( Package map )
+    {
+        ChoosingMap = false;
+        MapPackage = map;
+        Game.Menu.Lobby.Map = map.FullIdent;
+
+        StateHasChanged();
     }
 
     public void LeaveLobby()

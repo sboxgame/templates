@@ -6,6 +6,14 @@
 @using Sandbox.UI;
 
 <root>
+
+    @if ( ChoosingMap )
+    {
+        <MapSelect OnPackageSelected=@OnMapSelected />
+
+        return;
+    }
+
     <label class="game-title">
         @Game.Menu.Package.Title
     </label>
@@ -25,7 +33,7 @@
             <FormGroup class="form-group">
                 <Label>Map</Label>
                 <Control>
-                    <SlimPackageCard OnLaunch=@OpenMapSelect Package=@MapPackage />
+                    <SlimPackageCard OnLaunch=@OnMapClicked Package=@MapPackage />
                 </Control>
             </FormGroup>
         </div>
@@ -40,38 +48,40 @@
 @code
 {
     int MaxPlayersSupported { get; set; } = 1;
+    int MaxPlayers { get; set; } = 1;
     Package MapPackage { get; set; }
 
-    void OpenMapSelect()
+    bool ChoosingMap;
+    void OnMapClicked()
     {
-        this.Navigate( "/setup/map" );
+        ChoosingMap = true;
+        StateHasChanged();
     }
 
-    async void FetchPackage()
+    void OnMapSelected( Package map )
     {
-        MapPackage = await Package.FetchAsync( Game.Menu.Lobby?.Map ?? "facepunch.square", true );
+        ChoosingMap = false;
+        MapPackage = map;
+        StateHasChanged();
     }
 
-    protected override void OnAfterTreeRender( bool firstTime )
-    {
-        FetchPackage();
-    }
 
     protected override async Task OnParametersSetAsync()
     {
         MaxPlayersSupported = Game.Menu.Package.GetMeta<int>( "MaxPlayers", 1 );
+        MaxPlayers = MaxPlayersSupported;
 
-        await Game.Menu.CreateLobbyAsync( MaxPlayersSupported, "game", true );
-        Game.Menu.Lobby.Map = "facepunch.square";
+        MapPackage = await Package.FetchAsync( "facepunch.square", false );
+        StateHasChanged();
     }
 
     async Task Play()
     {
-        await Game.Menu.StartServerAsync( Game.Menu.Lobby.MaxMembers, $"{Game.Menu.Lobby.Owner.Name}'s game", Game.Menu.Lobby.Map );
+        await Game.Menu.StartServerAsync( MaxPlayers, $"My game", MapPackage.FullIdent );
     }
 
     protected override int BuildHash()
     {
-        return HashCode.Combine( Game.Menu.Lobby, Game.Menu.Lobby?.Map, MapPackage );
+        return HashCode.Combine( MaxPlayers, MapPackage );
     }
 }

@@ -5,25 +5,17 @@
 @inherits Panel
 
 <root>
-    <PackageList ShowFilters="@true" style="padding-bottom: 50px;" Query="type:map sort:popular" OnSelected="@OnPackageSelected" Take=@(50)></PackageList>
+    <PackageList ShowFilters="@true" style="padding-bottom: 50px;" Query="type:map sort:popular" OnSelected="@PackageSelected" Take=@(50)></PackageList>
 
     <div style="height: 64px;" />
-
-    <div class="controls">
-        <a @onclick=@GoBack>Return</a>
-    </div>
 </root>
 
 @code
 {
-    void OnPackageSelected( Package package )
-    {
-        Game.Menu.Lobby.Map = package.FullIdent;
-        GoBack();
-    }
+    public System.Action<Package> OnPackageSelected;
 
-    void GoBack()
+    void PackageSelected( Package package )
     {
-        AncestorsAndSelf.OfType<NavHostPanel>().FirstOrDefault()?.GoBack();
+        OnPackageSelected?.Invoke( package );
     }
 }
