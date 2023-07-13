@@ -26,7 +26,8 @@
     "LeaderboardType": "None",
     "GameCategory": "TechDemos",
     "ProjectTemplate": {
-      "Icon": "location_searching"
+      "Icon": "location_searching",
+      "Description": "A simple first person shooter game."
     },
     "CsProjName": "",
     "HttpAllowList": null,

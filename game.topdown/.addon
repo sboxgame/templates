@@ -26,7 +26,8 @@
     "LeaderboardType": "None",
     "GameCategory": "TechDemos",
     "ProjectTemplate": {
-      "Icon": "vertical_align_bottom"
+      "Icon": "vertical_align_bottom",
+      "Description": "A simple game played from a top-down perspective."
     }
   }
 }
