@@ -90,6 +90,7 @@ MainMenu
                 color: rgba( white, 1 );
                 font-weight: 900;
                 sound-in: ui.button.over;
+                cursor: pointer;
             }
 
             &:active
@@ -147,6 +148,7 @@ SlimPackageCard
     {
         &:hover
         {
+            cursor: pointer;
             color: white;
             transform: scale( 1.1 );
             sound-in: ui.button.over;
@@ -168,6 +170,7 @@ i
     {
         &:hover
         {
+            cursor: pointer;
             color: white;
             transform: scale( 1.1 );
             sound-in: ui.button.over;
