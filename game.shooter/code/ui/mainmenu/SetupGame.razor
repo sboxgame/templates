@@ -6,14 +6,6 @@
 @using Sandbox.UI;
 
 <root>
-
-    @if ( ChoosingMap )
-    {
-        <MapSelect OnPackageSelected=@OnMapSelected />
-
-        return;
-    }
-
     <label class="game-title">
         @Game.Menu.Package.Title
     </label>
@@ -51,20 +43,17 @@
     int MaxPlayers { get; set; } = 1;
     Package MapPackage { get; set; }
 
-    bool ChoosingMap;
     void OnMapClicked()
     {
-        ChoosingMap = true;
+        Game.Overlay.ShowPackageSelector( "type:map sort:popular", OnMapSelected );
         StateHasChanged();
     }
 
     void OnMapSelected( Package map )
     {
-        ChoosingMap = false;
         MapPackage = map;
         StateHasChanged();
     }
-
 
     protected override async Task OnParametersSetAsync()
     {
