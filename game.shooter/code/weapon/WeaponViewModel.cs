@@ -17,6 +17,6 @@ public partial class WeaponViewModel : BaseViewModel
 	{
 		base.PlaceViewmodel();
 
-		Camera.Main.SetViewModelCamera( 80f, 1, 500 );
+		Camera.Main.SetViewModelCamera( 80f );
 	}
 }
